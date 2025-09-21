@@ -1,35 +1,84 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { useState } from "react";
+import BackgroundImage from "./component/BackgroundImage";
+import Footer from "./component/Footer";
+import HeaderComponent from "./component/Header/HeaderComponent";
+import ItemListComponent from "./component/ItemList/ItemListComponent";
+import SidebarComponent from "./component/Sidebar/SidebarComponent";
+import { InitialItems } from "./lib/constants";
+import "./resources/index.css";
+import EmptyViewComponent from "./component/EmptyViewComponent";
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [itemList, setItemList] = useState(InitialItems);
+  const handleAddItems = (newItem) => {
+    const newItemObj = {
+      id: new Date().getTime(),
+      name: newItem,
+      packed: false,
+    };
+    setItemList((prev) => [...prev, newItemObj]);
+  };
 
+  const handleToggleItem = (id) => {
+    const updatedItems = itemList.map((item) =>
+      item.id === id ? { ...item, isPacked: !item.isPacked } : item
+    );
+    setItemList(updatedItems);
+  };
+
+  const handleRemoveAllItems = () => {
+    setItemList([]);
+  };
+
+  const handleDeleteItem = (id) => {
+    const filteredItems = itemList.filter((item) => item.id !== id);
+    setItemList(filteredItems);
+  };
+
+  const handleResettoInitial = () => {
+    setItemList(InitialItems);
+  };
+
+  const handleAllChecked = () => {
+    const allCheckedItems = itemList.map((item) => ({
+      ...item,
+      isPacked: true,
+    }));
+    setItemList(allCheckedItems);
+  };
+
+  const handleAllUnchecked = () => {
+    const allUncheckedItems = itemList.map((item) => ({
+      ...item,
+      isPacked: false,
+    }));
+    setItemList(allUncheckedItems);
+  };
   return (
     <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
+      <BackgroundImage />
+      <main>
+        <HeaderComponent />
+
+        <ItemListComponent
+          itemList={itemList}
+          handleDeleteItem={handleDeleteItem}
+          handleToggleItem={handleToggleItem}
+        />
+
+        <SidebarComponent
+          handleAddItems={handleAddItems}
+          handleDeleteItem={handleDeleteItem}
+          onRemoveAllItems={handleRemoveAllItems}
+          handleResettoInitial={handleResettoInitial}
+          handleAllChecked={handleAllChecked}
+          handleAllUnchecked={handleAllUnchecked}
+        />
+      </main>
+
+      <Footer />
     </>
-  )
+  );
 }
 
-export default App
+export default App;
