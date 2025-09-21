@@ -54,11 +54,16 @@ function App() {
     }));
     setItemList(allUncheckedItems);
   };
+  const selectedItems = itemList.filter((item) => item.isPacked).length;
+  const totalItems = itemList.length;
   return (
     <>
       <BackgroundImage />
       <main>
-        <HeaderComponent />
+        <HeaderComponent
+          selectedItems={selectedItems}
+          totalItems={totalItems}
+        />
 
         <ItemListComponent
           itemList={itemList}

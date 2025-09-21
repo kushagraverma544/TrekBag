@@ -1,25 +1,48 @@
+import { useState } from "react";
+import Select from "react-select";
 import EmptyViewComponent from "../EmptyViewComponent";
+import { DEFAULT, sortByOptions } from "../../lib/constants";
 
 const ItemListComponent = ({
   itemList,
   handleDeleteItem,
   handleToggleItem,
 }) => {
+  const [sortBy, setSortBy] = useState(DEFAULT);
+
+  if (!itemList || itemList.length === 0) {
+    return <EmptyViewComponent />;
+  }
+
+  const sortedItemList = [...itemList].sort((a, b) => {
+    if (sortBy === "packed") {
+      return a.isPacked === b.isPacked ? 0 : a.isPacked ? -1 : 1;
+    } else if (sortBy === "unpacked") {
+      return a.isPacked === b.isPacked ? 0 : a.isPacked ? 1 : -1;
+    }
+    return 0;
+  });
+
   return (
     <ul className="item-list">
-      {itemList.length === 0 ? (
-        <EmptyViewComponent />
-      ) : (
-        itemList.map((item) => (
-          <Items
-            key={item.id} // 🔑 Always include a unique key
-            id={item.id}
-            item={item}
-            handleDeleteItem={handleDeleteItem}
-            handleToggleItem={handleToggleItem}
+      {itemList.length > 0 && (
+        <section className="sorting">
+          <Select
+            onChange={(option) => setSortBy(option?.value)}
+            defaultValue={sortByOptions[0]}
+            options={sortByOptions}
           />
-        ))
+        </section>
       )}
+      {sortedItemList.map((item) => (
+        <Items
+          key={item.id} // 🔑 Always provide a unique key
+          id={item.id}
+          item={item}
+          handleDeleteItem={handleDeleteItem}
+          handleToggleItem={handleToggleItem}
+        />
+      ))}
     </ul>
   );
 };
@@ -31,7 +54,7 @@ function Items({ id, item, handleDeleteItem, handleToggleItem }) {
         <input
           id={id}
           type="checkbox"
-          checked={item?.isPacked} // ✅ Ensure consistent property naming
+          checked={item?.isPacked} // ✅ Ensure property name matches your state
           onChange={() => handleToggleItem(id)}
         />
         {item?.name}

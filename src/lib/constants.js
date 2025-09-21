@@ -15,3 +15,25 @@ export const InitialItems = [
     isPacked: false,
   },
 ];
+
+export const BACKGROUND_IMAGE_URL =
+  "https://bytegrad.com/course-assets/react-nextjs/dots.png";
+
+export const DEFAULT = "default";
+export const PACKED = "packed";
+export const UNPACKED = "unpacked";
+
+export const sortByOptions = [
+  {
+    value: "default",
+    label: "Sort by Default",
+  },
+  {
+    value: "packed",
+    label: "Sort by Packed",
+  },
+  {
+    value: "unpacked",
+    label: "Sort by Unpacked",
+  },
+];

@@ -1,5 +1,9 @@
-const CounterComponent = () => {
-  return <b>1/3 items packed</b>;
+const CounterComponent = ({ selectedItems, totalItems }) => {
+  return (
+    <p>
+      <b>{selectedItems}</b>/ {totalItems} items packed
+    </p>
+  );
 };
 
 export default CounterComponent;
