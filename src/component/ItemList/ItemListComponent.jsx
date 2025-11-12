@@ -36,7 +36,7 @@ const ItemListComponent = ({
       )}
       {sortedItemList.map((item) => (
         <Items
-          key={item.id} // 🔑 Always provide a unique key
+          key={item.id}
           id={item.id}
           item={item}
           handleDeleteItem={handleDeleteItem}
@@ -54,7 +54,7 @@ function Items({ id, item, handleDeleteItem, handleToggleItem }) {
         <input
           id={id}
           type="checkbox"
-          checked={item?.isPacked} // ✅ Ensure property name matches your state
+          checked={item?.isPacked} 
           onChange={() => handleToggleItem(id)}
         />
         {item?.name}

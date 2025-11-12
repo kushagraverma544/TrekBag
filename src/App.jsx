@@ -6,7 +6,6 @@ import ItemListComponent from "./component/ItemList/ItemListComponent";
 import SidebarComponent from "./component/Sidebar/SidebarComponent";
 import { InitialItems } from "./lib/constants";
 import "./resources/index.css";
-import EmptyViewComponent from "./component/EmptyViewComponent";
 
 function App() {
   const [itemList, setItemList] = useState(InitialItems);
