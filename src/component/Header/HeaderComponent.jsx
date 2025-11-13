@@ -2,11 +2,11 @@ import React from "react";
 import Logo from "./Logo";
 import CounterComponent from "./CounterComponent";
 
-const HeaderComponent = ({ selectedItems, totalItems }) => {
+const HeaderComponent = () => {
   return (
     <header>
       <Logo />
-      <CounterComponent selectedItems={selectedItems} totalItems={totalItems} />
+      <CounterComponent />
     </header>
   );
 };

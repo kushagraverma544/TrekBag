@@ -1,11 +1,13 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import Button from "../common/Button";
+import { ItemContext } from "../../contexts/ItemListContextProvider";
 
-export const AddItemForm = ({ onAddItem }) => {
+export const AddItemForm = () => {
+  const { handleAddItems } = useContext(ItemContext);
   const [newItem, setNewItem] = useState("");
   const handleSubmit = (e) => {
     e.preventDefault();
-    onAddItem(newItem);
+    handleAddItems(newItem);
     setNewItem("");
   };
   return (

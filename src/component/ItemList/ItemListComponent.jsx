@@ -1,27 +1,32 @@
-import { useState } from "react";
+import { useContext, useMemo, useState } from "react";
 import Select from "react-select";
 import EmptyViewComponent from "../EmptyViewComponent";
 import { DEFAULT, sortByOptions } from "../../lib/constants";
+import { ItemContext } from "../../contexts/ItemListContextProvider";
 
-const ItemListComponent = ({
-  itemList,
-  handleDeleteItem,
-  handleToggleItem,
-}) => {
+const ItemListComponent = () => {
   const [sortBy, setSortBy] = useState(DEFAULT);
+
+  const { itemList, handleDeleteItem, handleToggleItem } =
+    useContext(ItemContext);
+
+  const sortedItemList = useMemo(() => {
+    if (sortBy === "packed") {
+      return [...itemList].sort((a, b) =>
+        a.isPacked === b.isPacked ? 0 : a.isPacked ? -1 : 1
+      );
+    }
+    if (sortBy === "unpacked") {
+      return [...itemList].sort((a, b) =>
+        a.isPacked === b.isPacked ? 0 : a.isPacked ? 1 : -1
+      );
+    }
+    return itemList;
+  }, [sortBy, itemList]);
 
   if (!itemList || itemList.length === 0) {
     return <EmptyViewComponent />;
   }
-
-  const sortedItemList = [...itemList].sort((a, b) => {
-    if (sortBy === "packed") {
-      return a.isPacked === b.isPacked ? 0 : a.isPacked ? -1 : 1;
-    } else if (sortBy === "unpacked") {
-      return a.isPacked === b.isPacked ? 0 : a.isPacked ? 1 : -1;
-    }
-    return 0;
-  });
 
   return (
     <ul className="item-list">
@@ -54,7 +59,7 @@ function Items({ id, item, handleDeleteItem, handleToggleItem }) {
         <input
           id={id}
           type="checkbox"
-          checked={item?.isPacked} 
+          checked={item?.isPacked}
           onChange={() => handleToggleItem(id)}
         />
         {item?.name}

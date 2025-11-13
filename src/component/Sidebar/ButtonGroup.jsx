@@ -1,31 +1,35 @@
+import { useContext } from "react";
 import Button from "../common/Button";
+import { ItemContext } from "../../contexts/ItemListContextProvider";
 
-const ButtonGroup = ({
-  onRemoveAllItems,
-  onResettoInitial,
-  onAllChecked,
-  onAllUnchecked,
-}) => {
+const ButtonGroup = () => {
+  const {
+    handleAllChecked,
+    handleAllUnchecked,
+    handleResettoInitial,
+    handleRemoveAllItems,
+  } = useContext(ItemContext);
+
   const secondaryButtonsInfo = [
     {
       id: 1,
       title: "Mark all as complete",
-      OnClick: onAllChecked,
+      OnClick: handleAllChecked,
     },
     {
       id: 2,
       title: "Mark all as incomplete",
-      OnClick: onAllUnchecked,
+      OnClick: handleAllUnchecked,
     },
     {
       id: 3,
       title: "Reset to Initial",
-      OnClick: onResettoInitial,
+      OnClick: handleResettoInitial,
     },
     {
       id: 4,
       title: "Remove all items",
-      OnClick: onRemoveAllItems,
+      OnClick: handleRemoveAllItems,
     },
   ];
   return (

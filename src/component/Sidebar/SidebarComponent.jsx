@@ -1,22 +1,11 @@
 import { AddItemForm } from "./AddItemForm";
 import ButtonGroup from "./ButtonGroup";
 
-const SidebarComponent = ({
-  handleAddItems,
-  onRemoveAllItems,
-  handleResettoInitial,
-  handleAllChecked,
-  handleAllUnchecked,
-}) => {
+const SidebarComponent = () => {
   return (
     <div className="sidebar">
-      <AddItemForm onAddItem={handleAddItems} />
-      <ButtonGroup
-        onRemoveAllItems={onRemoveAllItems}
-        onResettoInitial={handleResettoInitial}
-        onAllChecked={handleAllChecked}
-        onAllUnchecked={handleAllUnchecked}
-      />
+      <AddItemForm />
+      <ButtonGroup />
     </div>
   );
 };
